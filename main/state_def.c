@@ -15,9 +15,6 @@
 #include "state_def.h"
 
 
-extern st_status_t g_st;
-
-
 state_functions_t state_table[MAXNUM_STATEs];
 
 //caution: do NEVER re-assign
@@ -78,23 +75,61 @@ void states_update(event_t event)
 	}
 }
 
-void task_states(void)
-{
-	event_t event;
-	event = pop_event();
+QueueHandle_t xQueueSM;
 
-	if(event != EVENT_STATE_POLL)
+void task_states(void *pvParameters)
+{
+	message_t message;
+
+	xQueueSM = xQueueCreate(10, sizeof(message_t));
+
+	while(1)
 	{
-		set_time_stamp(&g_st.event_tstamp);
-		print_event(event);
+		message.event = EVENT_STATE_POLL;
+
+		if(xQueueReceive( xQueueSM, (message_t *)&message, (TickType_t)5 ) )
+		{
+			printf("[task_sm] recv message = %d, %d\n", message.from, message.event);
+			event = message.event;
+		}
+
+		if(event != EVENT_STATE_POLL)
+		{
+//			set_time_stamp(&g_st.event_tstamp);
+			print_event(message.from, message.event);
+		}
+
+		states_update(event);
 	}
 
-	states_update(event);
+	vTaskDelete(NULL);
 }
 
-void print_event(event_t event)
+
+void print_event(task_id_t from, event_t event)
 {
-	printf("[EVENT] ");
+	printf("[EVENT] from task: ");
+
+	switch(from)
+	{
+		case TASK_POLL_IO:
+			printf("POLL_IO");
+			break;
+		case TASK_BUTTON:
+			printf("BUTTON");
+			break;
+		case TASK_LED:
+			printf("LED");
+			break;
+		case TASK_STATE_MACHINE:
+			printf("STATE_MACHINE");
+			break;
+		default:
+			printf("unknown");
+			break;
+	}
+
+	printf(", event: ");
 
 	switch(event)
 	{
@@ -123,7 +158,7 @@ void print_event(event_t event)
 			printf("STATE_POLL");
 			break;
 		default:
-			printf("???");
+			printf("unknown");
 			break;
 	}
 

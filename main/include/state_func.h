@@ -1,8 +1,8 @@
-#ifndef __STATE_FUNC_H__
-#define __STATE_FUNC_H__
+#ifndef __STATE_FUNC__H__
+#define __STATE_FUNC__H__
 
 #include "define.h"
-#include "state_def.h"
+//#include "state_def.h"
 
 state_t state_entry_discover(event_t event);
 state_t state_action_discover(event_t event);

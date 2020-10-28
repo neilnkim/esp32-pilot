@@ -4,6 +4,7 @@ idf_component_register(
 					"task_led.c"
 					"task_button.c"
 					"task_state_machine.c"
+					"state_func.c"
     INCLUDE_DIRS 	"."
 					"include"
 	)

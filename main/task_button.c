@@ -115,14 +115,15 @@ void poll_button(uint32_t interval_ms)
 }
 
 
+#define BUTTON_POLL_PERIOD_MS 10
 void task_button(void *pvParameters)
 {
 	init_buttons();
 
     while (1)
 	{
-		poll_button(10);
-		vTaskDelay(10/portTICK_PERIOD_MS);
+		poll_button(BUTTON_POLL_PERIOD_MS);
+		vTaskDelay(BUTTON_POLL_PERIOD_MS/portTICK_PERIOD_MS);
 	}
 
     vTaskDelete(NULL);

@@ -136,5 +136,16 @@ typedef struct {
 	event_t event_off;
 } switch_info_t;
 
+// state machine ------------------------------
+typedef state_t (*state_entry_func_t)(event_t);
+typedef state_t (*state_action_func_t)(event_t);
+typedef void (*state_exit_func_t)(event_t);
+
+typedef struct
+{
+	state_entry_func_t entry_function;
+	state_action_func_t action_function;
+	state_exit_func_t exit_function;
+} state_functions_t;
 
 #endif

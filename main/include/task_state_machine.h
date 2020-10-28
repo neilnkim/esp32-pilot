@@ -18,5 +18,10 @@
 #include "define.h"
 
 void task_state_machine(void *pvParameters);
+void init_state_table(void);
+void state_init();
+void states_update(event_t event);
+void print_event(task_id_t from, event_t event);
+void print_state(state_phase_t st, state_t state);
 
 #endif

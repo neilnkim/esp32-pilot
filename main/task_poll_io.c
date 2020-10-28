@@ -75,14 +75,16 @@ void poll_switch(uint32_t interval_ms)
 	}
 }
 
+
+#define SWITCH_POLL_PERIOD_MS 10
 void task_poll_io(void *pvParameters)
 {
 	init_switchs();
 
     while (1)
 	{
-		poll_switch(10);
-		vTaskDelay(10/portTICK_PERIOD_MS);
+		poll_switch(SWITCH_POLL_PERIOD_MS);
+		vTaskDelay(SWITCH_POLL_PERIOD_MS/portTICK_PERIOD_MS);
     }
 
     vTaskDelete(NULL);
