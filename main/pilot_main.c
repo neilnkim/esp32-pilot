@@ -19,6 +19,7 @@
 #include "task_poll_io.h"
 #include "task_button.h"
 #include "task_state_machine.h"
+#include "timer_func.h"
 
 
 void init_gpio(void)
@@ -73,6 +74,7 @@ void print_chip_info(void)
 void app_main(void)
 {
 	init_gpio();
+	init_state_timer();
 
 	print_version();
 	print_chip_info();

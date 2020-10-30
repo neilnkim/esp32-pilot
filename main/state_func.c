@@ -16,6 +16,7 @@
 #include "define.h"
 #include "state_func.h"
 #include "task_state_machine.h"
+#include "timer_func.h"
 
 
 static state_t current_state;
@@ -32,6 +33,7 @@ state_t state_entry_discover(event_t event)
 	set_led_action_solid(LED_ID2_MAKEUP, LED_COLOR_OFF, 0);
 	reset_all_timer();
 */
+
 	return NO_STATE_CHANGE;
 }
 
@@ -212,6 +214,10 @@ state_t state_entry_cleaning(event_t event)
 	reset_all_timer();
 	set_timer(TIMER_STEAM_OFF, 60000, EVENT_STATE_TIMEOUT);
 */
+	// set off timer
+	clear_state_timeout();
+	set_state_timeout(10000);
+
 	return NO_STATE_CHANGE;
 }
 

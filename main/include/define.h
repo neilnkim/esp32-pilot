@@ -1,7 +1,7 @@
-#ifndef __DEFINE_H__
-#define __DEFINE_H__
+#ifndef __DEFINE__H__
+#define __DEFINE__H__
 
-#define FW_VERSION "v0.0.1"
+#define FW_VERSION "v0.0.2"
 
 // gpios ------------------------------
 #define GPIO_BTN1 	34
